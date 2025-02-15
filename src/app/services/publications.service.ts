@@ -2,13 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Publication } from '../models/publication.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PublicationsService {
-  private publicacionesUrl = 'http://localhost:5070/api/publications';
-  private imagenesUrl = 'http://localhost:5070/api/images/upload';
+  private publicacionesUrl = environment.publicationsUrl;
+  private imagenesUrl = environment.imagesUrl;
 
   constructor(private http: HttpClient) { }
 

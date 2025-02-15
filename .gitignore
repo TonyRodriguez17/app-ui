@@ -1,1 +1,4 @@
 node_modules
+
+# Ignorar environment de producción
+src/environments/environment.prod.ts
