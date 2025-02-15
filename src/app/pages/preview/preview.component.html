@@ -1,0 +1,67 @@
+<div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+  <!-- Carrusel de imágenes -->
+  <div class="relative" *ngIf="publication?.imagenesUrls?.length > 0">
+    <img
+      [src]="selectedImage"
+      *ngIf="selectedImage"
+      alt="Imagen de la publicación"
+      class="object-cover w-full h-64"
+    />
+
+    <!-- Controles del carrusel -->
+    <button
+      *ngIf="publication.imagenesUrls.length > 1"
+      class="absolute left-2 top-1/2 bg-gray-800 bg-opacity-50 text-white px-2 py-1 rounded-full"
+      (click)="prevImage()"
+    >
+      &#8592;
+    </button>
+
+    <button
+      *ngIf="publication.imagenesUrls.length > 1"
+      class="absolute right-2 top-1/2 bg-gray-800 bg-opacity-50 text-white px-2 py-1 rounded-full"
+      (click)="nextImage()"
+    >
+      &#8594;
+    </button>
+  </div>
+
+  <!-- Información de la publicación -->
+  <div class="p-6">
+    <!-- Título y precio -->
+    <div class="flex justify-between items-center">
+      <h2 class="text-2xl font-bold">{{ publication.title }}</h2>
+      <span class="text-xl font-semibold text-green-600"
+        >${{ publication.price }}</span
+      >
+    </div>
+    <p class="text-gray-500 text-sm mt-1">{{ publication.address }}</p>
+
+    <!-- Descripción -->
+    <p class="text-gray-700 mt-4">{{ publication.description }}</p>
+
+    <!-- Características -->
+    <div class="grid grid-cols-2 gap-4 mt-6">
+      <div>
+        <p class="text-sm text-gray-500">Tipo de Local</p>
+        <p class="font-medium">{{ publication.typeOfLocal }}</p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Tipo de Operación</p>
+        <p class="font-medium">{{ publication.typeOfOperation }}</p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Habitaciones</p>
+        <p class="font-medium">{{ publication.numberOfRooms }}</p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Baños</p>
+        <p class="font-medium">{{ publication.numberOfBathrooms }}</p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Tamaño (m²)</p>
+        <p class="font-medium">{{ publication.size }}</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Publication } from '../models/publication.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PublicationsService {
+  private publicacionesUrl = 'http://localhost:5070/api/publications';
+  private imagenesUrl = 'http://localhost:5070/api/images/upload';
+
+  constructor(private http: HttpClient) { }
+
+  publicar(datos: any): Observable<any> {
+    return this.http.post(`${this.publicacionesUrl}/create`, datos);
+  }
+
+  subirImagenes(publicacionId: number, imagenes: File[]): Observable<any> {
+    const formData = new FormData();
+    imagenes.forEach((imagen, index) => {
+      formData.append(`files`, imagen);
+    });
+    formData.append('publicacionId', publicacionId.toString());
+
+    return this.http.post(`${this.imagenesUrl}/${publicacionId}`, formData);
+  }
+  
+  getPublicaciones(): Observable<Publication[]> {
+    return this.http.get<Publication[]>(this.publicacionesUrl);
+  }
+
+  updatePublication(publicationId: number, publication: any): Observable<Publication> {
+    console.log('📄 Publicación a actualizar:', publication);
+    return this.http.put<Publication>(`${this.publicacionesUrl}/update/${publicationId}`, publication);
+  }
+
+  deletePublication(publicationId: number): Observable<any> {
+    return this.http.delete(`${this.publicacionesUrl}/delete/${publicationId}`);
+  }
+}

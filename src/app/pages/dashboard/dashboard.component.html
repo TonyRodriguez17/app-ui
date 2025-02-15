@@ -1,0 +1,160 @@
+<app-navbar></app-navbar>
+<div class="container mx-auto p-6">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Gestion de Publicaciones</h1>
+    <button
+      class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg cursor-pointer"
+      (click)="openModal()"
+    >
+      + Nueva Publicacion
+    </button>
+  </div>
+
+  <div
+    *ngIf="isModalOpen"
+    class="fixed inset-0 bg-black/50 flex justify-center items-center p-4"
+  >
+    <div
+      class="relative bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl md:w-3/4 lg:w-1/2"
+    >
+      <button
+        (click)="closeModal()"
+        class="absolute top-4 p-0.5 right-4 bg-gray-700 text-gray-400 hover:text-white cursor-pointer rounded-full"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          ></path>
+        </svg>
+      </button>
+      <app-strapper
+        (closeModal)="closeModal()"
+        (refreshPublications)="getPublications()"
+      ></app-strapper>
+    </div>
+  </div>
+
+  <div
+    *ngIf="isFormOpen"
+    class="fixed inset-0 bg-black/50 flex justify-center items-center p-4"
+  >
+    <div
+      class="relative bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl md:w-3/4 lg:w-1/2"
+    >
+      <button
+        (click)="closeForm()"
+        class="absolute top-4 p-0.5 right-4 bg-gray-700 text-gray-400 hover:text-white cursor-pointer rounded-full"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          ></path>
+        </svg>
+      </button>
+      <app-edit [publication]="selectedPublication" (closeForm)="closeForm()"></app-edit>
+    </div>
+  </div>
+
+  <div class="mb-4 flex items-center gap-4">
+    <input
+      type="text"
+      placeholder="Buscar..."
+      class="border border-gray-300 px-4 py-2 rounded-lg w-full"
+      [(ngModel)]="search"
+      (input)="filterPublications()"
+    />
+    <select
+      class="border border-gray-300 px-4 py-2 rounded-lg"
+      [(ngModel)]="selectedCategory"
+      (change)="filterPublications()"
+    >
+      <option value="">Filtrar por categoría</option>
+      <option value="Venta">Venta</option>
+      <option value="Renta">Renta</option>
+    </select>
+  </div>
+
+  <div class="bg-white shadow-md rounded-lg overflow-hidden">
+    <!-- Tabla de Publicaciones -->
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+      <table class="w-full">
+        <thead class="bg-gray-200 text-gray-700">
+          <tr>
+            <th class="py-3 px-6 text-left">Título</th>
+            <th class="py-3 px-6 text-left">Categoría</th>
+            <th class="py-3 px-6 text-left">Precio</th>
+            <th class="py-3 px-6 text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let publication of filteredPublications" class="border-b">
+            <td class="py-3 px-6">{{ publication.title }}</td>
+            <td class="py-3 px-6">{{ publication.typeOfOperation }}</td>
+            <td class="py-3 px-6">${{ publication.price }}</td>
+            <td class="py-3 px-6 text-center flex justify-center gap-2">
+              <button
+                class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg flex items-center gap-1 cursor-pointer"
+                (click)="openEditModal(publication)"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.862 3.487a1.5 1.5 0 0 1 2.122 2.122L6.322 18.272a2.001 2.001 0 0 1-.74.46l-3.583 1.134a.75.75 0 0 1-.94-.94l1.133-3.583a2.001 2.001 0 0 1 .46-.74L16.862 3.487z"
+                  ></path>
+                </svg>
+                Editar
+              </button>
+
+              <button
+                class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg flex items-center gap-1 cursor-pointer"
+                (click)="deletePublication(publication.id)"
+                >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18 18 6M6 6l12 12"
+                  ></path>
+                </svg>
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

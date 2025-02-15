@@ -1,0 +1,45 @@
+<div class="w-full max-w-2xl mx-auto">
+  <h2 class="text-xl font-bold mb-4 text-gray-700 flex justify-between items-center">
+    Image Preview
+    <div *ngIf="images.length > imagesPerPage" class="flex space-x-2">
+      <button (click)="prevPage()" [disabled]="currentPage === 0"
+        class="bg-gray-700 text-white px-3 py-1 rounded-lg disabled:opacity-50">
+        ← Anterior
+      </button>
+      <button (click)="nextPage()" [disabled]="(currentPage + 1) * imagesPerPage >= images.length"
+        class="bg-gray-700 text-white px-3 py-1 rounded-lg disabled:opacity-50">
+        Siguiente →
+      </button>
+    </div>
+  </h2>
+
+  <!-- Área de Drag & Drop -->
+  <div class="border-2 border-dashed border-gray-400 rounded-lg p-6 text-center cursor-pointer bg-gray-800"
+    (drop)="onDrop($event)" (dragover)="preventDefaults($event)" (dragenter)="preventDefaults($event)">
+
+    <p class="text-gray-400">Arrastra y suelta tus imágenes aquí</p>
+    <p class="text-gray-500 text-sm">o haz clic para seleccionar</p>
+    <input type="file" multiple class="hidden" (change)="onFileSelected($event)" #fileInput>
+    <button class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg" (click)="fileInput.click()">Seleccionar archivos</button>
+  </div>
+
+  <!-- Vista previa de imágenes en lista paginada -->
+  <div *ngIf="images.length > 0" class="mt-4">
+    <ul class="space-y-2">
+      <li *ngFor="let image of getPaginatedImages(); let i = index"
+          class="flex items-center justify-between bg-gray-700 text-gray-200 p-2 rounded-lg shadow-md">
+        <!-- Información de la imagen -->
+        <div class="flex items-center gap-3">
+          <img [src]="getPaginatedPreviews()[i]" class="w-12 h-12 object-cover rounded-lg">
+          <span class="truncate max-w-xs">{{ image.name }}</span>
+        </div>
+
+        <!-- Botón de eliminar -->
+        <button (click)="removeImage(i)"
+          class="text-red-500 hover:text-red-700 p-1 mr-4 transition cursor-pointer">
+          ✕
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>

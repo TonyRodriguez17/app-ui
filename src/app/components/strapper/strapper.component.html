@@ -1,0 +1,98 @@
+<div class="max-w-3xl mx-auto text-center">
+  <!-- Stepper -->
+  <div class="flex items-center justify-center mb-10">
+    <div
+      *ngFor="let step of [1, 2, 3]; let i = index"
+      class="flex items-center"
+    >
+      <!-- Números del Stepper -->
+      <div
+        class="relative flex items-center justify-center w-12 h-12 rounded-full text-white font-bold transition-all duration-300"
+        [class.bg-blue-500]="isActive(step) || isCompleted(step)"
+        [class.bg-gray-300]="!isActive(step) && !isCompleted(step)"
+      >
+        <span *ngIf="!isCompleted(step)">{{ step }}</span>
+        <svg
+          *ngIf="isCompleted(step)"
+          class="w-6 h-6 text-white"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M5 13l4 4L19 7"
+          ></path>
+        </svg>
+      </div>
+
+      <!-- Línea entre los números -->
+      <div
+        *ngIf="i < 2"
+        class="w-20 h-1 bg-gray-300 mx-2 transition-all duration-300"
+        [class.bg-blue-500]="isCompleted(step)"
+      ></div>
+    </div>
+  </div>
+
+  <!-- Contenido de los pasos -->
+  <div class="p-6 rounded-lg transition-all duration-300 w-full">
+    <div [hidden]="currentStep !== 1">
+      <app-publications (formData)="handleFormData($event)"></app-publications>
+      <div class="flex justify-end mt-4">
+        <button
+          (click)="nextStep()"
+          [disabled]="!isStepValid()"
+          class="px-6 py-2 rounded-lg text-white transition bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          Siguiente
+        </button>
+      </div>
+    </div>
+
+    <div [hidden]="currentStep !== 2">
+      <app-upload
+        (imagesData)="handleImages($event, generatePreviews($event))"
+        (previewData)="actualizarPreviews($event)"
+      >
+      </app-upload>
+      <div class="flex justify-between mt-4">
+        <button
+          (click)="prevStep()"
+          class="bg-gray-500 text-white px-6 py-2 rounded-lg"
+        >
+          Anterior
+        </button>
+        <button
+          (click)="nextStep()"
+          [disabled]="!isImageStepValid()"
+          class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          Siguiente
+        </button>
+      </div>
+    </div>
+
+    <div [hidden]="currentStep !== 3">
+      <app-preview [publication]="publicacionData"></app-preview>
+      <div class="flex justify-between mt-4">
+        <button
+          (click)="prevStep()"
+          class="bg-gray-500 text-white px-6 py-2 rounded-lg"
+        >
+          Anterior
+        </button>
+        <button
+          (click)="publicar()"
+          class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg flex items-center gap-2 pointer-cursor"
+          [disabled]="loading"
+        >
+          <span *ngIf="loading" class="loader"></span>
+          {{ loading ? "Publicando..." : "Publicar" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
