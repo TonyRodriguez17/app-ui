@@ -28,14 +28,12 @@ export class PreviewComponent implements OnChanges {
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnChanges() {
-    console.log('🔄 Cambios detectados:', this.publication.imagenesUrls);
-  
     if (this.publication?.imagenesUrls?.length > 0) {
       this.selectedImage = this.publication.imagenesUrls[0];
       console.log('✅ Primera imagen asignada:', this.selectedImage);
     }
   
-    this.cdr.detectChanges(); // 🚀 Force Angular to detect changes
+    this.cdr.detectChanges(); 
   }
 
   prevImage() {

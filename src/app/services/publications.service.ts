@@ -32,7 +32,6 @@ export class PublicationsService {
   }
 
   updatePublication(publicationId: number, publication: any): Observable<Publication> {
-    console.log('📄 Publicación a actualizar:', publication);
     return this.http.put<Publication>(`${this.publicacionesUrl}/update/${publicationId}`, publication);
   }
 

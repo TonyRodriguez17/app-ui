@@ -21,7 +21,6 @@ export class UploadComponent {
   // Manejar archivos seleccionados desde el input
   onFileSelected(event: any) {
     const files = Array.from(event.target.files) as File[];
-    console.log('📂 Archivos seleccionados:', files);
     this.processFiles(files);
   }
 
@@ -49,14 +48,11 @@ export class UploadComponent {
   
           if (loadedImages === files.length) { 
             this.previews.push(...newPreviews); 
-            console.log('📸 Imágenes en Base64 generadas:', this.previews);
-            
             // 🚀 Emit previews first to ensure StrapperComponent has updated URLs
             this.previewData.emit([...this.previews]); 
             
             // 🚀 Emit files after previews are ready
             this.imagesData.emit([...this.images]); 
-            console.log('🚀 Enviando imágenes Base64 a StrapperComponent:', this.previews);
           }
         };
         reader.readAsDataURL(file);

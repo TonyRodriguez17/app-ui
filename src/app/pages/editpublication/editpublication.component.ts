@@ -36,7 +36,6 @@ export class EditpublicationComponent {
 
       this.publicationsServe.updatePublication(this.publication.id, formData).subscribe({
         next: (response) => {
-          console.log('📄 Publicación actualizada con éxito:', response);
           this.loading = false;
           this.closeForm.emit();
           this.refreshPublications.emit();

@@ -43,7 +43,6 @@ export class DashboardComponent {
   getPublications() {
     this.publicationService.getPublicaciones().subscribe({
       next: (publications: Publication[]) => {
-        console.log('📄 Publicaciones obtenidas:', publications);
         this.publications = publications;
         this.filteredPublications = publications;
       },
@@ -70,8 +69,7 @@ export class DashboardComponent {
     if (confirm('¿Estás seguro de que quieres eliminar esta publicación?')) {
       this.publicationService.deletePublication(id).subscribe({
         next: () => {
-          console.log('📄 Publicación eliminada con éxito');
-          this.getPublications(); // Refresca las publicaciones después de la eliminación
+          this.getPublications(); 
         },
         error: (error) => {
           console.error('❌ Error al eliminar la publicación:', error);
