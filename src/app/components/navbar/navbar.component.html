@@ -13,12 +13,29 @@
         >{{ page }}</a
       >
     </div>
-    <div class="relative">
+    <div class="relative" (clickOutside)="closeMenu()">
       <button
-        class="w-10 h-10 bg-gray-600 text-white rounded-full flex items-center justify-center font-semibold focus:outline-none"
+        class="w-10 h-10 bg-gray-600 text-white rounded-full flex items-center justify-center font-semibold focus:outline-none cursor-pointer"
+        (click)="toggleMenu($event)"
       >
-        {{ firstLetter}}
+        {{ firstLetter }}
       </button>
+
+      <div
+        *ngIf="isMenuOpen"
+        class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg"
+      >
+        <div
+          class="absolute right-2.5 -top-1 w-4 h-4 bg-white transform rotate-45 border-t border-l border-gray-200"
+        ></div>
+
+        <a
+          href="#"
+          class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+          (click)="logout()"
+          >Cerrar sesión</a
+        >
+      </div>
     </div>
   </div>
 </nav>
