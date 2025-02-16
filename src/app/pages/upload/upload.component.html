@@ -25,9 +25,9 @@
 
   <!-- Vista previa de imágenes en lista paginada -->
   <div *ngIf="images.length > 0" class="mt-4">
-    <ul class="space-y-2">
+    <ul class="mb-4">
       <li *ngFor="let image of getPaginatedImages(); let i = index"
-          class="flex items-center justify-between bg-gray-700 text-gray-200 p-2 rounded-lg shadow-md">
+          class="flex items-center justify-between bg-gray-700 text-gray-200 p-2 rounded-lg shadow-md mt-2">
         <!-- Información de la imagen -->
         <div class="flex items-center gap-3">
           <img [src]="getPaginatedPreviews()[i]" class="w-12 h-12 object-cover rounded-lg">
