@@ -1,22 +1,18 @@
 <app-navbar></app-navbar>
 <div class="container mx-auto p-6">
   <div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-bold text-gray-800">Gestion de Publicaciones</h1>
+    <h1 class="text-2xl font-bold text-gray-800">Gestión de Publicaciones</h1>
     <button
       class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg cursor-pointer"
       (click)="openModal()"
     >
-      + Nueva Publicacion
+      + Nueva Publicación
     </button>
   </div>
 
-  <div
-    *ngIf="isModalOpen"
-    class="fixed inset-0 bg-black/50 flex justify-center items-center p-4"
-  >
-    <div
-      class="relative bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl md:w-3/4 lg:w-1/2"
-    >
+  <!-- Modal de Nueva Publicación -->
+  <div *ngIf="isModalOpen" class="fixed inset-0 bg-black/50 flex justify-center items-center p-4">
+    <div class="relative bg-white p-6 rounded-lg shadow-lg w-full sm:w-11/12 md:max-w-2xl max-h-[90vh] overflow-y-auto">
       <button
         (click)="closeModal()"
         class="absolute top-4 p-0.5 right-4 bg-gray-700 text-gray-400 hover:text-white cursor-pointer rounded-full"
@@ -29,27 +25,16 @@
           stroke="currentColor"
           class="w-6 h-6"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 18L18 6M6 6l12 12"
-          ></path>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
-      <app-strapper
-        (closeModal)="closeModal()"
-        (refreshPublications)="getPublications()"
-      ></app-strapper>
+      <app-strapper (closeModal)="closeModal()" (refreshPublications)="getPublications()"></app-strapper>
     </div>
   </div>
 
-  <div
-    *ngIf="isFormOpen"
-    class="fixed inset-0 bg-black/50 flex justify-center items-center p-4"
-  >
-    <div
-      class="relative bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl md:w-3/4 lg:w-1/2"
-    >
+  <!-- Modal de Edición -->
+  <div *ngIf="isFormOpen" class="fixed inset-0 bg-black/50 flex justify-center items-center p-4">
+    <div class="relative bg-white p-6 rounded-lg shadow-lg w-full sm:w-11/12 md:max-w-2xl max-h-[90vh] overflow-y-auto">
       <button
         (click)="closeForm()"
         class="absolute top-4 p-0.5 right-4 bg-gray-700 text-gray-400 hover:text-white cursor-pointer rounded-full"
@@ -62,17 +47,14 @@
           stroke="currentColor"
           class="w-6 h-6"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 18L18 6M6 6l12 12"
-          ></path>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
       <app-edit [publication]="selectedPublication" (closeForm)="closeForm()"></app-edit>
     </div>
   </div>
 
+  <!-- Filtros -->
   <div class="mb-4 flex items-center gap-4">
     <input
       type="text"
@@ -92,10 +74,10 @@
     </select>
   </div>
 
+  <!-- Tabla de Publicaciones -->
   <div class="bg-white shadow-md rounded-lg overflow-hidden">
-    <!-- Tabla de Publicaciones -->
-    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-      <table class="w-full">
+    <div class="overflow-x-auto">
+      <table class="w-full table-auto">
         <thead class="bg-gray-200 text-gray-700">
           <tr>
             <th class="py-3 px-6 text-left">Título</th>
@@ -109,7 +91,8 @@
             <td class="py-3 px-6">{{ publication.title }}</td>
             <td class="py-3 px-6">{{ publication.typeOfOperation }}</td>
             <td class="py-3 px-6">${{ publication.price }}</td>
-            <td class="py-3 px-6 text-center flex justify-center gap-2">
+            <td class="py-3 px-6 text-center flex flex-wrap justify-center gap-2 sm:flex">
+              <!-- Botón Editar -->
               <button
                 class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg flex items-center gap-1 cursor-pointer"
                 (click)="openEditModal(publication)"
@@ -131,10 +114,11 @@
                 Editar
               </button>
 
+              <!-- Botón Eliminar -->
               <button
                 class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg flex items-center gap-1 cursor-pointer"
                 (click)="deletePublication(publication.id)"
-                >
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -143,11 +127,7 @@
                   stroke="currentColor"
                   class="w-5 h-5"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6 18 18 6M6 6l12 12"
-                  ></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
                 Eliminar
               </button>
