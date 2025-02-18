@@ -13,28 +13,24 @@
     </div>
   </h2>
 
-  <!-- Área de Drag & Drop -->
   <div class="border-2 border-dashed border-gray-400 rounded-lg p-6 text-center cursor-pointer bg-gray-800"
     (drop)="onDrop($event)" (dragover)="preventDefaults($event)" (dragenter)="preventDefaults($event)">
 
     <p class="text-gray-400">Arrastra y suelta tus imágenes aquí</p>
     <p class="text-gray-500 text-sm">o haz clic para seleccionar</p>
-    <input type="file" multiple class="hidden" (change)="onFileSelected($event)" #fileInput>
+    <input type="file" multiple class="hidden" (change)="onFileSelected($event)" accept="image/*" #fileInput>
     <button class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg" (click)="fileInput.click()">Seleccionar archivos</button>
   </div>
 
-  <!-- Vista previa de imágenes en lista paginada -->
   <div *ngIf="images.length > 0" class="mt-4">
     <ul class="mb-4">
       <li *ngFor="let image of getPaginatedImages(); let i = index"
           class="flex items-center justify-between bg-gray-700 text-gray-200 p-2 rounded-lg shadow-md mt-2">
-        <!-- Información de la imagen -->
         <div class="flex items-center gap-3">
           <img [src]="getPaginatedPreviews()[i]" class="w-12 h-12 object-cover rounded-lg">
           <span class="truncate max-w-xs">{{ image.name }}</span>
         </div>
 
-        <!-- Botón de eliminar -->
         <button (click)="removeImage(i)"
           class="text-red-500 hover:text-red-700 p-1 mr-4 transition cursor-pointer">
           ✕

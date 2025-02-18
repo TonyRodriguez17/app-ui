@@ -10,67 +10,70 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './upload.component.css'
 })
 export class UploadComponent {
-  @Output() imagesData = new EventEmitter<File[]>(); // Emitir archivos al padre
-  @Output() previewData = new EventEmitter<string[]>(); // 🚀 Emitir Base64 al padre
+  @Output() imagesData = new EventEmitter<File[]>();
+  @Output() previewData = new EventEmitter<string[]>();
 
-  images: File[] = []; // Almacenar imágenes seleccionadas
-  previews: string[] = []; // Almacenar vistas previas en Base64
-  currentPage = 0; // Página actual de la galería
-  imagesPerPage = 4; // Imágenes por página
+  images: File[] = [];
+  previews: string[] = [];
+  currentPage = 0;
+  imagesPerPage = 4;
 
-  // Manejar archivos seleccionados desde el input
   onFileSelected(event: any) {
     const files = Array.from(event.target.files) as File[];
     this.processFiles(files);
   }
 
-  // Manejar archivos soltados en el área de Drop
   onDrop(event: DragEvent) {
     event.preventDefault();
     if (event.dataTransfer?.files) {
       const files = Array.from(event.dataTransfer.files) as File[];
+
+      const imageFiles = files.filter(file => file.type.startsWith('image/'));
+      if (imageFiles.length !== files.length) {
+        alert("Algunos archivos no son imágenes y fueron descartados.");
+      }
+
       this.processFiles(files);
     }
   }
 
-  // Procesar archivos y generar previsualización
   processFiles(files: File[]) {
-    let loadedImages = 0; 
-    const newPreviews: string[] = []; 
-    
+    let loadedImages = 0;
+    const newPreviews: string[] = [];
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+
     files.forEach((file, index) => {
-      if (!this.images.some(img => img.name === file.name)) { 
+      if (!allowedTypes.includes(file.type)) {
+        alert(`El archivo "${file.name}" no es una imagen válida.`);
+        return;
+      }
+
+      if (!this.images.some(img => img.name === file.name)) {
         this.images.push(file);
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          newPreviews[index] = e.target.result; 
-          loadedImages++; 
-  
-          if (loadedImages === files.length) { 
-            this.previews.push(...newPreviews); 
-            // 🚀 Emit previews first to ensure StrapperComponent has updated URLs
-            this.previewData.emit([...this.previews]); 
-            
-            // 🚀 Emit files after previews are ready
-            this.imagesData.emit([...this.images]); 
+          newPreviews[index] = e.target.result;
+          loadedImages++;
+
+          if (loadedImages === files.length) {
+            this.previews.push(...newPreviews);
+            this.previewData.emit([...this.previews]);
+            this.imagesData.emit([...this.images]);
           }
         };
         reader.readAsDataURL(file);
       }
     });
   }
-  
 
-  // Eliminar imagen de la lista
   removeImage(index: number) {
     const globalIndex = this.currentPage * this.imagesPerPage + index;
     this.images.splice(globalIndex, 1);
     this.previews.splice(globalIndex, 1);
 
     this.imagesData.emit(this.images);
-    this.previewData.emit(this.previews); // 🚀 Emitir cambios en las previews
+    this.previewData.emit(this.previews);
 
-    // Si eliminamos la última imagen de una página, retrocedemos una página si es necesario
     if (this.getPaginatedImages().length === 0 && this.currentPage > 0) {
       this.currentPage--;
     }
