@@ -1,90 +1,143 @@
-<div *ngIf="publication">
-    <div class="bg-gray-900 p-6 rounded-lg shadow-md w-full max-w-2xl mx-auto text-gray-200">
-      <h2 class="text-2xl font-bold mb-4 text-white">Editar Publicación</h2>
-  
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- Título -->
-        <div>
-          <label class="block font-semibold">Título</label>
-          <input type="text" [(ngModel)]="publication.title"
-            class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full" required>
-        </div>
-  
-        <!-- Dirección -->
-        <div>
-          <label class="block font-semibold">Dirección</label>
-          <input type="text" [(ngModel)]="publication.address"
-            class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full" required>
-        </div>
-  
-        <!-- Tipo de Local -->
-        <div>
-          <label class="block font-semibold">Tipo de Local</label>
-          <select [(ngModel)]="publication.typeOfLocal"
-            class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full">
-            <option value="">Selecciona</option>
-            <option value="Casa">Casa</option>
-            <option value="Departamento">Departamento</option>
-            <option value="Terreno">Terreno</option>
-          </select>
-        </div>
-  
-        <!-- Tipo de Operación -->
-        <div>
-          <label class="block font-semibold">Tipo de Operación</label>
-          <select [(ngModel)]="publication.typeOfOperation"
-            class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full">
-            <option value="">Selecciona</option>
-            <option value="Venta">Venta</option>
-            <option value="Renta">Renta</option>
-          </select>
-        </div>
-  
-        <!-- Número de Habitaciones -->
-        <div>
-          <label class="block font-semibold">Habitaciones</label>
-          <input type="number" [(ngModel)]="publication.numberOfRooms"
-            class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full">
-        </div>
-  
-        <!-- Número de Baños -->
-        <div>
-          <label class="block font-semibold">Baños</label>
-          <input type="number" [(ngModel)]="publication.numberOfBathrooms"
-            class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full">
-        </div>
-  
-        <!-- Precio -->
-        <div>
-          <label class="block font-semibold">Precio ($)</label>
-          <input type="number" [(ngModel)]="publication.price"
-            class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full" required>
-        </div>
-  
-        <!-- Tamaño -->
-        <div>
-          <label class="block font-semibold">Tamaño (m²)</label>
-          <input type="number" [(ngModel)]="publication.size"
-            class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full">
-        </div>
-      </div>
-  
-      <!-- Descripción -->
-      <div class="mt-4">
-        <label class="block font-semibold">Descripción</label>
-        <textarea [(ngModel)]="publication.description"
-          class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full h-24" required></textarea>
+<div *ngIf="editedPublication">
+  <div
+    class="bg-gray-900 p-6 rounded-lg shadow-md w-full max-w-2xl mx-auto text-gray-200"
+  >
+    <h2 class="text-2xl font-bold mb-4 text-white">Editar Publicación</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Título -->
+      <div>
+        <label class="block font-semibold">Título</label>
+        <input
+          type="text"
+          [(ngModel)]="editedPublication.title"
+          class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full"
+          required
+        />
       </div>
 
-      <!-- Botones -->
-      <div class="mt-4">
-        <button
+      <!-- Dirección -->
+      <div>
+        <label class="block font-semibold">Dirección</label>
+        <input
+          type="text"
+          [(ngModel)]="editedPublication.address"
+          class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full"
+          required
+        />
+      </div>
+
+      <!-- Tipo de Local -->
+      <div>
+        <label class="block font-semibold">Tipo de Local</label>
+        <select
+          [(ngModel)]="editedPublication.typeOfLocal"
+          class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full"
+        >
+          <option value="">Selecciona</option>
+          <option value="Casa">Casa</option>
+          <option value="Departamento">Departamento</option>
+          <option value="Terreno">Terreno</option>
+        </select>
+      </div>
+
+      <!-- Tipo de Operación -->
+      <div>
+        <label class="block font-semibold">Tipo de Operación</label>
+        <select
+          [(ngModel)]="editedPublication.typeOfOperation"
+          class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full"
+        >
+          <option value="">Selecciona</option>
+          <option value="Venta">Venta</option>
+          <option value="Renta">Renta</option>
+        </select>
+      </div>
+
+      <!-- Número de Habitaciones -->
+      <div>
+        <label class="block font-semibold">Habitaciones</label>
+        <input
+          type="number"
+          [(ngModel)]="editedPublication.numberOfRooms"
+          class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full"
+        />
+      </div>
+
+      <!-- Número de Baños -->
+      <div>
+        <label class="block font-semibold">Baños</label>
+        <input
+          type="number"
+          [(ngModel)]="editedPublication.numberOfBathrooms"
+          class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full"
+        />
+      </div>
+
+      <!-- Número de Medios Baños -->
+      <div>
+        <label class="block font-semibold">Medios Baños</label>
+        <input
+          type="number"
+          [(ngModel)]="editedPublication.numberOfHalfBathrooms"
+          class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full"
+        />
+      </div>
+
+      <!-- Precio -->
+      <div>
+        <label class="block font-semibold">Precio ($)</label>
+        <input
+          type="text"
+          [(ngModel)]="editedPublication.price"
+          mask="separator.0"
+          thousandSeparator=","
+          class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full"
+          required
+        />
+      </div>
+
+      <!-- Tamaño terreno -->
+      <div>
+        <label class="block font-semibold">Tamaño (<small>Terreno</small>)</label>
+        <input
+          type="number"
+          [(ngModel)]="editedPublication.size"
+          class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full"
+        />
+      </div>
+
+      <!-- Tamaño de construccion  -->
+      <div>
+        <label class="block font-semibold">Tamaño (<small>Construccion</small>)</label>
+        <input
+          type="number"
+          [(ngModel)]="editedPublication.buildSize"
+          class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full"
+        />
+      </div>
+    </div>
+
+    <!-- Descripción -->
+    <div class="mt-4">
+      <label class="block font-semibold">Descripción</label>
+      <textarea
+        [(ngModel)]="editedPublication.description"
+        class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full h-24"
+        required
+      ></textarea>
+    </div>
+
+    <!-- Botones -->
+    <div class="mt-4">
+      <button
         (click)="updatePublication()"
         class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg flex items-center gap-2 pointer-cursor"
-        [disabled]="loading">
-            <span *ngIf="loading" class="loader"></span>
-            {{ loading ? 'Guardando...' : 'Guardar' }}
-        </button>
-      </div> 
+        [disabled]="loading"
+      >
+        <span *ngIf="loading" class="loader"></span>
+        {{ loading ? "Guardando..." : "Guardar" }}
+      </button>
     </div>
   </div>
+</div>

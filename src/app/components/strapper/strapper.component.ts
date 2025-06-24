@@ -29,7 +29,9 @@ export class StrapperComponent {
     typeOfOperation: '',
     numberOfRooms: '',
     numberOfBathrooms: '',
+    numberOfHalfBathrooms: 0,
     size: 0,
+    buildSize: 0,
     imagenes: [] as File[],
     imagenesUrls: [] as string[]
   };
@@ -90,6 +92,8 @@ export class StrapperComponent {
       form.typeOfOperation.trim() !== '' &&
       form.numberOfRooms !== '' &&
       form.numberOfBathrooms !== '' &&
+      form.numberOfHalfBathrooms >= 0 && 
+      form.buildSize > 0 &&
       form.size > 0
     );
   }
@@ -101,7 +105,7 @@ export class StrapperComponent {
   publicar() {
     this.loading = true;
     this.successMessage = '';
-  
+
     this.publicationsService.publicar({
       title: this.publicacionData.title,
       description: this.publicacionData.description,
@@ -111,44 +115,40 @@ export class StrapperComponent {
       typeOfOperation: this.publicacionData.typeOfOperation,
       numberOfRooms: this.publicacionData.numberOfRooms.toString(),
       numberOfBathrooms: this.publicacionData.numberOfBathrooms.toString(),
-      size: this.publicacionData.size
+      numberOfHalfBathrooms: this.publicacionData.numberOfHalfBathrooms?.toString() ?? '0',
+      size: this.publicacionData.size,
+      buildSize: this.publicacionData.buildSize
     }).subscribe({
       next: (response) => {
         const publicacionId = response.id;
-        console.log('Publicación creada con ID:', publicacionId);
-  
+
         if (this.publicacionData.imagenes.length > 0) {
           this.publicationsService.subirImagenes(publicacionId, this.publicacionData.imagenes)
             .subscribe({
               next: (imgResponse) => {
-                console.log('Imágenes subidas correctamente:', imgResponse);
-  
-                // 🚀 Guardamos las URLs devueltas por el backend
                 this.publicacionData.imagenesUrls = imgResponse.urls;
                 this.loading = false;
-                this.successMessage = 'Publicación creada con éxito 🎉';
-  
-                // 🚀 Emitir evento para cerrar el modal después de la publicación
+                this.successMessage = 'Publicación creada con éxito';
+
                 this.closeModal.emit();
                 this.refreshPublications.emit();
               },
               error: (error) => {
-                console.error('❌ Error subiendo imágenes:', error);
                 this.loading = false;
               }
             });
         } else {
           this.loading = false;
-          this.successMessage = 'Publicación creada con éxito 🎉';
-          this.closeModal.emit(); // 🚀 Cerrar modal si no hay imágenes
+          this.successMessage = 'Publicación creada con éxito';
+          this.closeModal.emit(); 
         }
       },
       error: (error) => {
-        console.error('❌ Error creando publicación:', error);
+        console.error('Error creando publicación:', error);
         this.loading = false;
       },
       complete: () => {
-        console.log('✅ Proceso de publicación completado');
+        console.log('Proceso de publicación completado');
       }
     });
   }

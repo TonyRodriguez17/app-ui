@@ -21,11 +21,18 @@ export class DashboardComponent {
   selectedPublication: Publication | null = null;
   search: string = '';
   selectedCategory: string = '';
+  openShareId: number | null = null;
+  shareMenuVisible = false;
+  shareMenuPosition = { top: 0, left: 0 };
 
   constructor(private publicationService: PublicationsService) { }
 
   ngOnInit() {
     this.getPublications();
+
+    document.addEventListener('click', () => {
+      this.shareMenuVisible = false;
+    });
   }
 
   openModal() {
@@ -69,12 +76,37 @@ export class DashboardComponent {
     if (confirm('¿Estás seguro de que quieres eliminar esta publicación?')) {
       this.publicationService.deletePublication(id).subscribe({
         next: () => {
-          this.getPublications(); 
+          this.getPublications();
         },
         error: (error) => {
           console.error('❌ Error al eliminar la publicación:', error);
         }
       });
     }
+  }
+
+  openShareMenu(event: MouseEvent, publicationId: number): void {
+    event.stopPropagation();
+    this.openShareId = publicationId;
+    this.shareMenuVisible = true;
+
+    const rect = (event.target as HTMLElement).getBoundingClientRect();
+    this.shareMenuPosition = {
+      top: rect.bottom + window.scrollY,
+      left: rect.left + window.scrollX,
+    };
+  }
+
+  getShareUrl(id: number): string {
+    return encodeURIComponent(`http://localhost:4200/publicacion/${id}`);
+  }
+
+  formatViews(views: number): string {
+    if (views >= 1_000_000) {
+      return (views / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M';
+    } else if (views >= 1_000) {
+      return (views / 1_000).toFixed(1).replace(/\.0$/, '') + 'k';
+    }
+    return views.toString();
   }
 }

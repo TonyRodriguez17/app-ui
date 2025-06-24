@@ -1,26 +1,32 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgxMaskDirective } from 'ngx-mask';
+import { Publication } from '../../models/publication.model';
 
 @Component({
   selector: 'app-publications',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NgxMaskDirective],
   templateUrl: './publications.component.html',
   styleUrl: './publications.component.css'
 })
 export class PublicationsComponent {
-  @Output() formData = new EventEmitter<any>();
+  @Output() formData = new EventEmitter<Publication>();
 
-  publication = {
+  publication: Publication = {
+    id: 0,
     title: '',
     description: '',
     price: 0,
     address: '',
     typeOfLocal: '',
     typeOfOperation: '',
-    numberOfRooms: '',
-    numberOfBathrooms: '',
-    size: 0
+    numberOfRooms: 0,
+    numberOfBathrooms: 0,
+    numberOfHalfBathrooms: 0,
+    size: 0,
+    buildSize: 0,
+    views: 0
   };
 
   sendData() {
