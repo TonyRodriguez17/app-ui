@@ -10,7 +10,9 @@ import { Observable } from 'rxjs/internal/Observable';
 export class ContactSettingsService {
   private contactSettingsUrl = environment.contactSettingsUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+     console.log('[DEBUG] contactSettingsUrl:', this.contactSettingsUrl);
+  }
 
   getContactDetails(): Observable<ContactDetails> {
     return this.http.get<ContactDetails>(this.contactSettingsUrl);
