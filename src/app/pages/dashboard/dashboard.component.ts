@@ -6,6 +6,7 @@ import { Publication } from '../../models/publication.model';
 import { PublicationsService } from '../../services/publications.service';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { PublicationCardComponent } from '../../components/card/publication-card.component';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-dashboard',
@@ -88,7 +89,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getShareUrl(slug: string): string {
-    return `http://localhost:5070/share/${slug}`;
+    return `${environment.shareUrl}/${slug}`;
   }
 
   formatViews(views: number): string {

@@ -6,7 +6,8 @@ export const environment = {
   apiUrl: '${process.env.API_URL}',
   publicationsUrl: '${process.env.PUBLICATIONS_URL}',
   imagesUrl: '${process.env.IMAGES_URL}',
-  contactSettingsUrl: '${process.env.CONTACT_SETTINGS_URL}'
+  contactSettingsUrl: '${process.env.CONTACT_SETTINGS_URL}',
+  shareUrl: '${process.env.SHARE_URL}',
 };
 `;
 
