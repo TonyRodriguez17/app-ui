@@ -1,0 +1,137 @@
+<app-navbar></app-navbar>
+
+<!-- Contenedor centrado con proporciones personalizadas -->
+<div class="max-w-7xl mx-auto p-6 grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4 items-start">
+  <!-- Formulario -->
+  <div class="bg-white p-6 rounded-lg shadow-md w-full">
+    <h2 class="text-2xl font-bold mb-6">Editar Información de Contacto</h2>
+
+    <form (ngSubmit)="updateContactDetails()" class="space-y-4">
+      <div>
+        <label class="block font-semibold mb-1">Dirección</label>
+        <input
+          [(ngModel)]="contactDetails.address"
+          name="address"
+          class="w-full border border-gray-300 p-2 rounded"
+        />
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1">Email</label>
+        <input
+          [(ngModel)]="contactDetails.email"
+          name="email"
+          type="email"
+          class="w-full border border-gray-300 p-2 rounded"
+        />
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1">Teléfono</label>
+        <input
+          [(ngModel)]="contactDetails.phone"
+          name="phone"
+          class="w-full border border-gray-300 p-2 rounded"
+        />
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1">Horario L-V</label>
+        <input
+          [(ngModel)]="contactDetails.weekdayHours"
+          name="weekdayHours"
+          class="w-full border border-gray-300 p-2 rounded"
+        />
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1">Horario Sábado</label>
+        <input
+          [(ngModel)]="contactDetails.saturdayHours"
+          name="saturdayHours"
+          class="w-full border border-gray-300 p-2 rounded"
+        />
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1">Facebook</label>
+        <input
+          [(ngModel)]="contactDetails.facebook"
+          name="facebook"
+          class="w-full border border-gray-300 p-2 rounded"
+        />
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1">Instagram</label>
+        <input
+          [(ngModel)]="contactDetails.instagram"
+          name="instagram"
+          class="w-full border border-gray-300 p-2 rounded"
+        />
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1">YouTube</label>
+        <input
+          [(ngModel)]="contactDetails.youtube"
+          name="youtube"
+          class="w-full border border-gray-300 p-2 rounded"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded transition cursor-pointer"
+      >
+        Guardar Cambios
+      </button>
+    </form>
+  </div>
+
+  <!-- Vista previa -->
+  <div class="w-full md:w-[420px] bg-blue-50 p-6 rounded-lg space-y-4" style="height: fit-content;">
+    <div class="bg-blue-100 p-4 rounded">
+      <h3 class="text-lg font-bold">Horarios de Atención</h3>
+      <p>Lunes a Viernes: {{ contactDetails.weekdayHours }}</p>
+      <p>Sábado: {{ contactDetails.saturdayHours }}</p>
+    </div>
+
+    <div class="bg-blue-100 p-4 rounded">
+      <h3 class="text-lg font-bold">Ubicación y Contacto</h3>
+      <p><strong>Dirección:</strong> {{ contactDetails.address }}</p>
+      <p><strong>Teléfono:</strong> {{ contactDetails.phone }}</p>
+      <p><strong>Email:</strong> {{ contactDetails.email }}</p>
+    </div>
+
+    <div class="bg-blue-100 p-4 rounded">
+      <h3 class="text-lg font-bold mb-2">Síguenos</h3>
+      <div class="flex space-x-4 text-2xl justify-center">
+        <a
+          *ngIf="contactDetails.facebook"
+          [href]="contactDetails.facebook"
+          target="_blank"
+          class="text-blue-600"
+        >
+          <fa-icon [icon]="['fab', 'facebook-f']"></fa-icon>
+        </a>
+        <a
+          *ngIf="contactDetails.instagram"
+          [href]="contactDetails.instagram"
+          target="_blank"
+          class="text-pink-600"
+        >
+          <fa-icon [icon]="['fab', 'instagram']"></fa-icon>
+        </a>
+        <a
+          *ngIf="contactDetails.youtube"
+          [href]="contactDetails.youtube"
+          target="_blank"
+          class="text-red-600"
+        >
+          <fa-icon [icon]="['fab', 'youtube']"></fa-icon>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

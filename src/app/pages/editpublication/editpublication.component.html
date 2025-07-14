@@ -1,38 +1,40 @@
-<div *ngIf="editedPublication">
-  <div
-    class="bg-gray-900 p-6 rounded-lg shadow-md w-full max-w-2xl mx-auto text-gray-200"
-  >
-    <h2 class="text-2xl font-bold mb-4 text-white">Editar Publicación</h2>
+<app-navbar></app-navbar>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div *ngIf="editedPublication" class="mt-10 px-4">
+  <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-3xl mx-auto">
+    <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center">
+      Editar Publicación
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Título -->
       <div>
-        <label class="block font-semibold">Título</label>
+        <label class="block font-semibold text-gray-700 mb-1">Título</label>
         <input
           type="text"
           [(ngModel)]="editedPublication.title"
-          class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full"
+          class="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 px-4 py-2 rounded-lg w-full"
           required
         />
       </div>
 
       <!-- Dirección -->
       <div>
-        <label class="block font-semibold">Dirección</label>
+        <label class="block font-semibold text-gray-700 mb-1">Dirección</label>
         <input
           type="text"
           [(ngModel)]="editedPublication.address"
-          class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full"
+          class="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 px-4 py-2 rounded-lg w-full"
           required
         />
       </div>
 
       <!-- Tipo de Local -->
       <div>
-        <label class="block font-semibold">Tipo de Local</label>
+        <label class="block font-semibold text-gray-700 mb-1">Tipo de Local</label>
         <select
           [(ngModel)]="editedPublication.typeOfLocal"
-          class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full"
+          class="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 px-4 py-2 rounded-lg w-full"
         >
           <option value="">Selecciona</option>
           <option value="Casa">Casa</option>
@@ -43,10 +45,10 @@
 
       <!-- Tipo de Operación -->
       <div>
-        <label class="block font-semibold">Tipo de Operación</label>
+        <label class="block font-semibold text-gray-700 mb-1">Tipo de Operación</label>
         <select
           [(ngModel)]="editedPublication.typeOfOperation"
-          class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full"
+          class="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 px-4 py-2 rounded-lg w-full"
         >
           <option value="">Selecciona</option>
           <option value="Venta">Venta</option>
@@ -54,89 +56,89 @@
         </select>
       </div>
 
-      <!-- Número de Habitaciones -->
+      <!-- Habitaciones -->
       <div>
-        <label class="block font-semibold">Habitaciones</label>
+        <label class="block font-semibold text-gray-700 mb-1">Habitaciones</label>
         <input
           type="number"
           [(ngModel)]="editedPublication.numberOfRooms"
-          class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full"
+          class="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 px-4 py-2 rounded-lg w-full"
         />
       </div>
 
-      <!-- Número de Baños -->
+      <!-- Baños -->
       <div>
-        <label class="block font-semibold">Baños</label>
+        <label class="block font-semibold text-gray-700 mb-1">Baños</label>
         <input
           type="number"
           [(ngModel)]="editedPublication.numberOfBathrooms"
-          class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full"
+          class="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 px-4 py-2 rounded-lg w-full"
         />
       </div>
 
-      <!-- Número de Medios Baños -->
+      <!-- Medios Baños -->
       <div>
-        <label class="block font-semibold">Medios Baños</label>
+        <label class="block font-semibold text-gray-700 mb-1">Medios Baños</label>
         <input
           type="number"
           [(ngModel)]="editedPublication.numberOfHalfBathrooms"
-          class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full"
+          class="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 px-4 py-2 rounded-lg w-full"
         />
       </div>
 
       <!-- Precio -->
       <div>
-        <label class="block font-semibold">Precio ($)</label>
+        <label class="block font-semibold text-gray-700 mb-1">Precio ($)</label>
         <input
           type="text"
           [(ngModel)]="editedPublication.price"
           mask="separator.0"
           thousandSeparator=","
-          class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full"
+          class="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 px-4 py-2 rounded-lg w-full"
           required
         />
       </div>
 
       <!-- Tamaño terreno -->
       <div>
-        <label class="block font-semibold">Tamaño (<small>Terreno</small>)</label>
+        <label class="block font-semibold text-gray-700 mb-1">Tamaño Terreno (m²)</label>
         <input
           type="number"
           [(ngModel)]="editedPublication.size"
-          class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full"
+          class="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 px-4 py-2 rounded-lg w-full"
         />
       </div>
 
-      <!-- Tamaño de construccion  -->
+      <!-- Tamaño construcción -->
       <div>
-        <label class="block font-semibold">Tamaño (<small>Construccion</small>)</label>
+        <label class="block font-semibold text-gray-700 mb-1">Tamaño Construcción (m²)</label>
         <input
           type="number"
           [(ngModel)]="editedPublication.buildSize"
-          class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full"
+          class="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 px-4 py-2 rounded-lg w-full"
         />
       </div>
     </div>
 
     <!-- Descripción -->
-    <div class="mt-4">
-      <label class="block font-semibold">Descripción</label>
+    <div class="mt-6">
+      <label class="block font-semibold text-gray-700 mb-1">Descripción</label>
       <textarea
         [(ngModel)]="editedPublication.description"
-        class="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg w-full h-24"
+        class="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 px-4 py-2 rounded-lg w-full h-28"
         required
       ></textarea>
     </div>
 
-    <!-- Botones -->
-    <div class="mt-4">
+    <!-- Botón -->
+    <div class="mt-6 text-center">
       <button
         (click)="updatePublication()"
-        class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg flex items-center gap-2 pointer-cursor"
+        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl shadow-md transition-colors duration-300 cursor-pointer"
         [disabled]="loading"
       >
-        <span *ngIf="loading" class="loader"></span>
-        {{ loading ? "Guardando..." : "Guardar" }}
+        <span *ngIf="loading" class="loader inline-block mr-2"></span>
+        {{ loading ? "Guardando..." : "Guardar Cambios" }}
       </button>
     </div>
   </div>

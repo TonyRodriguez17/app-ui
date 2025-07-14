@@ -31,6 +31,14 @@ export class PublicationsService {
     return this.http.get<Publication[]>(this.publicacionesUrl);
   }
 
+  getPublicationById(publicationId: number): Observable<Publication> {
+    return this.http.get<Publication>(`${this.publicacionesUrl}/${publicationId}`);
+  }
+
+  getPublicationBySlug(slug: string): Observable<Publication> {
+    return this.http.get<Publication>(`${this.publicacionesUrl}/detail/${slug}`);
+  }
+
   updatePublication(publicationId: number, publication: any): Observable<Publication> {
     return this.http.put<Publication>(`${this.publicacionesUrl}/update/${publicationId}`, publication);
   }

@@ -44,7 +44,7 @@ export class NavbarComponent {
   logout() {
     localStorage.clear();
     this.router.navigate(['/login']);
-    this.isMenuOpen = false; // Cierra el menú después de cerrar sesión
+    this.isMenuOpen = false; 
   }
 
   closeMenu() {

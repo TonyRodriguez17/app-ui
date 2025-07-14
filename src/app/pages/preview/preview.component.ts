@@ -18,9 +18,11 @@ export class PreviewComponent implements OnChanges {
     typeOfOperation: '',
     numberOfRooms: '',
     numberOfBathrooms: '',
+    numberOfHalfBathrooms: 0,
     size: 0,
-    imagenesUrls: [] // 🚀 Aquí guardamos las URLs en Base64 y luego las reales
-  }; // Recibe los datos de la publicación desde el Strapper
+    buildSize: 0,
+    imagenesUrls: [] 
+  }; 
 
   selectedImage: string = ''; // Imagen seleccionada
   currentIndex: number = 0;

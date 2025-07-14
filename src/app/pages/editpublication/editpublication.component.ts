@@ -1,30 +1,40 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Publication } from '../../models/publication.model';
 import { PublicationsService } from '../../services/publications.service';
 import { NgxMaskDirective } from 'ngx-mask';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
 
 @Component({
   selector: 'app-edit',
-  imports: [CommonModule, FormsModule, NgxMaskDirective],
+  imports: [CommonModule, FormsModule, NgxMaskDirective, NavbarComponent],
   standalone: true,
   templateUrl: './editpublication.component.html',
   styleUrl: './editpublication.component.css'
 })
-export class EditpublicationComponent implements OnChanges {
-  @Input() publication: Publication | null = null;
-  @Output() closeForm = new EventEmitter<void>();
-  @Output() refreshPublications = new EventEmitter<void>();
-
+export class EditpublicationComponent implements OnInit {
   editedPublication: Publication | null = null;
   loading = false;
 
-  constructor(private publicationsServe: PublicationsService) { }
+  constructor(
+    private publicationsService: PublicationsService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['publication'] && this.publication) {
-      this.editedPublication = structuredClone(this.publication);
+  ngOnInit(): void {
+    const slug = this.route.snapshot.paramMap.get('slug');
+    if (slug) {
+      this.publicationsService.getPublicationBySlug(slug).subscribe({
+        next: (pub) => {
+          this.editedPublication = { ...pub };
+        },
+        error: () => {
+          console.error('❌ Error al cargar la publicación');
+        }
+      });
     }
   }
 
@@ -33,8 +43,6 @@ export class EditpublicationComponent implements OnChanges {
     if (this.editedPublication) {
       const formData = new FormData();
 
-      console.log('Actualizando publicación:', this.editedPublication);
-      
       formData.append('id', this.editedPublication.id.toString());
       formData.append('title', this.editedPublication.title);
       formData.append('description', this.editedPublication.description);
@@ -52,13 +60,13 @@ export class EditpublicationComponent implements OnChanges {
       formData.append('size', this.editedPublication.size.toString());
       formData.append('buildSize', this.editedPublication.buildSize.toString());
 
-      this.publicationsServe.updatePublication(this.editedPublication.id, formData).subscribe({
-        next: (response) => {
+      this.publicationsService.updatePublication(this.editedPublication.id, formData).subscribe({
+        next: () => {
           this.loading = false;
-          this.closeForm.emit();
-          this.refreshPublications.emit();
+          this.router.navigate(['/dashboard']);
         },
         error: () => {
+          this.loading = false;
           console.error('❌ Error al actualizar la publicación');
         },
       });

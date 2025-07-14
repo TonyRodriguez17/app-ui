@@ -1,6 +1,7 @@
 export interface Publication {
     id: number;
     title: string;
+    slug: string;
     address: string;
     typeOfLocal: string;
     numberOfRooms: number;

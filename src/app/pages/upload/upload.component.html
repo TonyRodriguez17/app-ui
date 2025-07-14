@@ -1,38 +1,72 @@
-<div class="w-full max-w-2xl mx-auto">
-  <h2 class="text-xl font-bold mb-4 text-gray-700 flex justify-between items-center">
-    Image Preview
-    <div *ngIf="images.length > imagesPerPage" class="flex space-x-2">
-      <button (click)="prevPage()" [disabled]="currentPage === 0"
-        class="bg-gray-700 text-white px-3 py-1 rounded-lg disabled:opacity-50">
+<div class="w-full max-w-3xl mx-auto bg-white shadow-md p-6 rounded-2xl">
+  <!-- Encabezado -->
+  <h2 class="text-2xl font-bold text-gray-800 mb-6 flex justify-between items-center">
+    Previsualización de Imágenes
+
+    <div *ngIf="images.length > imagesPerPage" class="flex gap-2">
+      <button
+        (click)="prevPage()"
+        [disabled]="currentPage === 0"
+        class="bg-gray-500 text-white px-4 py-1 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+      >
         ← Anterior
       </button>
-      <button (click)="nextPage()" [disabled]="(currentPage + 1) * imagesPerPage >= images.length"
-        class="bg-gray-700 text-white px-3 py-1 rounded-lg disabled:opacity-50">
+      <button
+        (click)="nextPage()"
+        [disabled]="(currentPage + 1) * imagesPerPage >= images.length"
+        class="bg-gray-500 text-white px-4 py-1 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+      >
         Siguiente →
       </button>
     </div>
   </h2>
 
-  <div class="border-2 border-dashed border-gray-400 rounded-lg p-6 text-center cursor-pointer bg-gray-800"
-    (drop)="onDrop($event)" (dragover)="preventDefaults($event)" (dragenter)="preventDefaults($event)">
+  <!-- Área de carga -->
+  <div
+    class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center cursor-pointer hover:border-blue-400 transition"
+    (drop)="onDrop($event)"
+    (dragover)="preventDefaults($event)"
+    (dragenter)="preventDefaults($event)"
+  >
+    <p class="text-gray-500">Arrastra y suelta tus imágenes aquí</p>
+    <p class="text-sm text-gray-400 mb-4">o haz clic para seleccionar</p>
 
-    <p class="text-gray-400">Arrastra y suelta tus imágenes aquí</p>
-    <p class="text-gray-500 text-sm">o haz clic para seleccionar</p>
-    <input type="file" multiple class="hidden" (change)="onFileSelected($event)" accept="image/*" #fileInput>
-    <button class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg" (click)="fileInput.click()">Seleccionar archivos</button>
+    <input
+      type="file"
+      multiple
+      class="hidden"
+      (change)="onFileSelected($event)"
+      accept="image/*"
+      #fileInput
+    />
+    <button
+      class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition"
+      (click)="fileInput.click()"
+    >
+      Seleccionar archivos
+    </button>
   </div>
 
-  <div *ngIf="images.length > 0" class="mt-4">
-    <ul class="mb-4">
-      <li *ngFor="let image of getPaginatedImages(); let i = index"
-          class="flex items-center justify-between bg-gray-700 text-gray-200 p-2 rounded-lg shadow-md mt-2">
-        <div class="flex items-center gap-3">
-          <img [src]="getPaginatedPreviews()[i]" class="w-12 h-12 object-cover rounded-lg">
-          <span class="truncate max-w-xs">{{ image.name }}</span>
+  <!-- Lista de imágenes -->
+  <div *ngIf="images.length > 0" class="mt-6">
+    <ul class="space-y-3">
+      <li
+        *ngFor="let image of getPaginatedImages(); let i = index"
+        class="flex items-center justify-between bg-gray-100 text-gray-800 p-3 rounded-lg shadow-sm"
+      >
+        <div class="flex items-center gap-4">
+          <img
+            [src]="getPaginatedPreviews()[i]"
+            class="w-14 h-14 object-cover rounded-lg border border-gray-300"
+          />
+          <span class="truncate max-w-xs font-medium">{{ image.name }}</span>
         </div>
 
-        <button (click)="removeImage(i)"
-          class="text-red-500 hover:text-red-700 p-1 mr-4 transition cursor-pointer">
+        <button
+          (click)="removeImage(i)"
+          class="text-red-500 hover:text-red-700 font-bold px-2 py-1 transition"
+          aria-label="Eliminar imagen"
+        >
           ✕
         </button>
       </li>

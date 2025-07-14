@@ -6,6 +6,7 @@ import { Publication } from '../../models/publication.model';
 
 @Component({
   selector: 'app-publications',
+  standalone: true,
   imports: [CommonModule, FormsModule, NgxMaskDirective],
   templateUrl: './publications.component.html',
   styleUrl: './publications.component.css'
@@ -16,6 +17,7 @@ export class PublicationsComponent {
   publication: Publication = {
     id: 0,
     title: '',
+    slug: '',
     description: '',
     price: 0,
     address: '',

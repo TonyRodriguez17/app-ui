@@ -5,17 +5,17 @@ import { PublicationsComponent } from '../../pages/publications/publications.com
 import { UploadComponent } from '../../pages/upload/upload.component';
 import { PreviewComponent } from '../../pages/preview/preview.component';
 import { PublicationsService } from '../../services/publications.service';
+import { Router } from '@angular/router';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-strapper',
-  imports: [CommonModule, FormsModule, PublicationsComponent, UploadComponent, PreviewComponent],
+  standalone: true,
+  imports: [CommonModule, FormsModule, PublicationsComponent, UploadComponent, PreviewComponent, NavbarComponent],
   templateUrl: './strapper.component.html',
   styleUrl: './strapper.component.css'
 })
 export class StrapperComponent {
-  @Output() closeModal = new EventEmitter<void>();
-  @Output() refreshPublications = new EventEmitter<void>();
-
   currentStep = 1;
   loading = false;
   successMessage = '';
@@ -36,7 +36,7 @@ export class StrapperComponent {
     imagenesUrls: [] as string[]
   };
 
-  constructor(private publicationsService: PublicationsService) { }
+  constructor(private publicationsService: PublicationsService, private router: Router) { }
 
   nextStep() {
     if (this.currentStep < 3) this.currentStep++;
@@ -92,7 +92,7 @@ export class StrapperComponent {
       form.typeOfOperation.trim() !== '' &&
       form.numberOfRooms !== '' &&
       form.numberOfBathrooms !== '' &&
-      form.numberOfHalfBathrooms >= 0 && 
+      form.numberOfHalfBathrooms >= 0 &&
       form.buildSize > 0 &&
       form.size > 0
     );
@@ -127,20 +127,16 @@ export class StrapperComponent {
             .subscribe({
               next: (imgResponse) => {
                 this.publicacionData.imagenesUrls = imgResponse.urls;
-                this.loading = false;
                 this.successMessage = 'Publicación creada con éxito';
-
-                this.closeModal.emit();
-                this.refreshPublications.emit();
+                this.router.navigate(['/dashboard']);
               },
-              error: (error) => {
+              error: () => {
                 this.loading = false;
               }
             });
         } else {
-          this.loading = false;
           this.successMessage = 'Publicación creada con éxito';
-          this.closeModal.emit(); 
+          this.router.navigate(['/dashboard']);
         }
       },
       error: (error) => {
@@ -148,6 +144,7 @@ export class StrapperComponent {
         this.loading = false;
       },
       complete: () => {
+        this.loading = false;
         console.log('Proceso de publicación completado');
       }
     });

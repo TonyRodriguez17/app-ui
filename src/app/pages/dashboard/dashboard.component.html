@@ -2,80 +2,12 @@
 <div class="container mx-auto p-6">
   <div class="flex justify-between items-center mb-6">
     <h1 class="text-2xl font-bold text-gray-800">Gestión de Publicaciones</h1>
-    <button
+    <a
+      routerLink="/create"
       class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg cursor-pointer"
-      (click)="openModal()"
     >
       + Nueva Publicación
-    </button>
-  </div>
-
-  <!-- Modal de Nueva Publicación -->
-  <div
-    *ngIf="isModalOpen"
-    class="fixed inset-0 bg-black/50 flex justify-center items-center p-4"
-  >
-    <div
-      class="relative bg-white p-6 rounded-lg shadow-lg w-full sm:w-11/12 md:max-w-2xl max-h-[90vh] overflow-y-auto"
-    >
-      <button
-        (click)="closeModal()"
-        class="absolute top-4 p-0.5 right-4 bg-gray-700 text-gray-400 hover:text-white cursor-pointer rounded-full"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="2"
-          stroke="currentColor"
-          class="w-6 h-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 18L18 6M6 6l12 12"
-          ></path>
-        </svg>
-      </button>
-      <app-strapper
-        (closeModal)="closeModal()"
-        (refreshPublications)="getPublications()"
-      ></app-strapper>
-    </div>
-  </div>
-
-  <!-- Modal de Edición -->
-  <div
-    *ngIf="isFormOpen"
-    class="fixed inset-0 bg-black/50 flex justify-center items-center p-4"
-  >
-    <div
-      class="relative bg-white p-6 rounded-lg shadow-lg w-full sm:w-11/12 md:max-w-2xl max-h-[90vh] overflow-y-auto"
-    >
-      <button
-        (click)="closeForm()"
-        class="absolute top-4 p-0.5 right-4 bg-gray-700 text-gray-400 hover:text-white cursor-pointer rounded-full"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="2"
-          stroke="currentColor"
-          class="w-6 h-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 18L18 6M6 6l12 12"
-          ></path>
-        </svg>
-      </button>
-      <app-edit
-        [publication]="selectedPublication"
-        (closeForm)="closeForm()"
-      ></app-edit>
-    </div>
+    </a>
   </div>
 
   <!-- Filtros -->
@@ -98,156 +30,53 @@
     </select>
   </div>
 
-  <!-- Tabla de Publicaciones -->
-  <div class="bg-white shadow-md rounded-lg overflow-hidden">
-    <div class="overflow-x-auto">
-      <table class="w-full table-auto">
-        <thead class="bg-gray-200 text-gray-700">
-          <tr>
-            <th class="py-3 px-6 text-left">Título</th>
-            <th class="py-3 px-6 text-left">Categoría</th>
-            <th class="py-3 px-6 text-left">Precio</th>
-            <th class="py-3 px-6 text-center">Vistas</th>
-            <th class="py-3 px-6 text-center">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let publication of filteredPublications" class="border-b">
-            <td class="py-3 px-6">{{ publication.title }}</td>
-            <td class="py-3 px-6">{{ publication.typeOfOperation }}</td>
-            <td class="py-3 px-6">
-              ${{ publication.price | number : "1.0-0" }}
-            </td>
-            <td class="py-3 px-6 text-center">
-              <div class="flex items-center justify-center gap-1 text-gray-700">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-5 h-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                  />
-                </svg>
-                <span>{{ formatViews(publication.views) }}</span>
-              </div>
-            </td>
-            <td
-              class="py-3 px-6 text-center flex flex-wrap justify-center gap-2 sm:flex"
-            >
-              <!-- Botón Editar -->
-              <button
-                class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg flex items-center gap-1 cursor-pointer"
-                (click)="openEditModal(publication)"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  class="w-5 h-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M16.862 3.487a1.5 1.5 0 0 1 2.122 2.122L6.322 18.272a2.001 2.001 0 0 1-.74.46l-3.583 1.134a.75.75 0 0 1-.94-.94l1.133-3.583a2.001 2.001 0 0 1 .46-.74L16.862 3.487z"
-                  ></path>
-                </svg>
-                Editar
-              </button>
+  <!-- Grid de tarjetas -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <app-publication-card
+      *ngFor="let publication of filteredPublications"
+      [publication]="publication"
+      (onEdit)="openEditModal($event)"
+      (onDelete)="deletePublication($event)"
+      (onShare)="lastMouseEvent = $event"
+      (onShareSlug)="openShareMenu(lastMouseEvent, $event)"
+    ></app-publication-card>
+  </div>
 
-              <!-- Botón Eliminar -->
-              <button
-                class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg flex items-center gap-1 cursor-pointer"
-                (click)="deletePublication(publication.id)"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  class="w-5 h-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  ></path>
-                </svg>
-                Eliminar
-              </button>
-
-              <!-- Botón Compartir -->
-              <button
-                class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-lg flex items-center gap-1 cursor-pointer"
-                (click)="openShareMenu($event, publication.id)"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  class="w-5 h-5"
-                >
-                  <path
-                    d="M21,12L14,5V9C7,10 4,15 3,20C5.5,16.5 9,14.9 14,14.9V19L21,12Z"
-                  />
-                </svg>
-                Compartir
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <!-- Menú flotante de compartir -->
-      <div
-        *ngIf="shareMenuVisible"
-        class="fixed z-50 bg-white border border-gray-300 rounded-lg shadow-lg p-2 text-sm text-gray-800 w-52"
-        [ngStyle]="{
-          top: shareMenuPosition.top + 'px',
-          left: shareMenuPosition.left + 'px'
-        }"
-      >
-        <a
-          [href]="
-            'https://www.facebook.com/sharer/sharer.php?u=' +
-            getShareUrl(openShareId!)
-          "
-          target="_blank"
-          class="flex items-center gap-2 hover:text-blue-600 py-1"
-        >
-          <img
-            src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg"
-            alt="Facebook"
-            class="w-4 h-4"
-          />
-          Facebook
-        </a>
-        <a
-          [href]="'https://wa.me/?text=' + getShareUrl(openShareId!)"
-          target="_blank"
-          class="flex items-center gap-2 hover:text-green-500 py-1"
-        >
-          <img
-            src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg"
-            alt="WhatsApp"
-            class="w-4 h-4"
-          />
-          WhatsApp
-        </a>
-      </div>
-    </div>
+  <!-- Menú flotante de compartir -->
+  <div
+    *ngIf="shareMenuVisible"
+    class="fixed z-50 bg-white border border-gray-300 rounded-lg shadow-lg p-2 text-sm text-gray-800 w-52"
+    [ngStyle]="{
+      top: shareMenuPosition.top + 'px',
+      left: shareMenuPosition.left + 'px'
+    }"
+  >
+    <a
+      [href]="
+        'https://www.facebook.com/sharer/sharer.php?u=' +
+        getShareUrl(openShareSlug!)
+      "
+      target="_blank"
+      class="flex items-center gap-2 hover:text-blue-600 py-1"
+    >
+      <img
+        src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg"
+        alt="Facebook"
+        class="w-4 h-4"
+      />
+      Facebook
+    </a>
+    <a
+      [href]="'https://wa.me/?text=' + getShareUrl(openShareSlug!)"
+      target="_blank"
+      class="flex items-center gap-2 hover:text-green-500 py-1"
+    >
+      <img
+        src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg"
+        alt="WhatsApp"
+        class="w-4 h-4"
+      />
+      WhatsApp
+    </a>
   </div>
 </div>

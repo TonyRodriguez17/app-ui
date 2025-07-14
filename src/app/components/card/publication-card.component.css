@@ -1,0 +1,16 @@
+.shadow-custom-top {
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1); /* sombra arriba */
+}
+
+.custom-top-shadow::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 10px;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.08); /* sombra hacia arriba */
+  pointer-events: none; /* para que no bloquee clics */
+}
