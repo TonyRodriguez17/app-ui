@@ -5,7 +5,8 @@ export const environment = {
   production: true,
   apiUrl: '${process.env.API_URL}',
   publicationsUrl: '${process.env.PUBLICATIONS_URL}',
-  imagesUrl: '${process.env.IMAGES_URL}'
+  imagesUrl: '${process.env.IMAGES_URL}',
+  contactSettingsUrl: '${process.env.CONTACT_SETTINGS_URL}'
 };
 `;
 
