@@ -92,6 +92,11 @@ export class DashboardComponent implements OnInit {
     return `${environment.shareUrl}/${slug}`;
   }
 
+  sendWhatsappMessage(): void {
+    const message = `Mira esta propiedad "${this.openShareSlug}". Los detalles están aquí: ${environment.shareUrl}/${this.openShareSlug}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+  }
+
   formatViews(views: number): string {
     if (views >= 1_000_000) return (views / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M';
     if (views >= 1_000) return (views / 1_000).toFixed(1).replace(/\.0$/, '') + 'k';

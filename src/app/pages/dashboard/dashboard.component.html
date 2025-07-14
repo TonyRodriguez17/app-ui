@@ -66,10 +66,10 @@
       />
       Facebook
     </a>
-    <a
-      [href]="'https://wa.me/?text=' + getShareUrl(openShareSlug!)"
+    <button
+      (click)="sendWhatsappMessage()"
       target="_blank"
-      class="flex items-center gap-2 hover:text-green-500 py-1"
+      class="flex items-center gap-2 hover:text-green-500 py-1 cursor-pointer"
     >
       <img
         src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg"
@@ -77,6 +77,6 @@
         class="w-4 h-4"
       />
       WhatsApp 
-    </a>
+    </button>
   </div>
 </div>
