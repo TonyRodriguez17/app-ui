@@ -27,7 +27,10 @@ export class ConfigPageComponent implements OnInit {
     youtube: ''
   };
 
-  constructor(private contactSettingsService: ContactSettingsService, private library: FaIconLibrary) { 
+  constructor(
+    private contactSettingsService: ContactSettingsService,
+    private library: FaIconLibrary
+  ) {
     library.addIcons(faYoutube, faFacebookF, faInstagram);
   }
 
@@ -39,15 +42,28 @@ export class ConfigPageComponent implements OnInit {
     this.contactSettingsService.getContactDetails().subscribe({
       next: (contactDetails: ContactDetails) => {
         this.contactDetails = contactDetails;
-        console.log('✅ Detalles de contacto obtenidos:', this.contactDetails);
       },
       error: (error) => {
-        console.error('❌ Error al obtener los detalles de contacto:', error);
+        this.contactDetails = {
+          address: '',
+          email: '',
+          phone: '',
+          weekdayHours: '',
+          saturdayHours: '',
+          facebook: '',
+          instagram: '',
+          twitter: '',
+          youtube: ''
+        };
       }
     });
   }
 
   updateContactDetails() {
+    if (!this.contactDetails) {
+      return;
+    }
+
     this.contactSettingsService.updateContactDetails(this.contactDetails).subscribe({
       next: () => {
         console.log('Detalles de contacto actualizados correctamente');
